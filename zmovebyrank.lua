@@ -2,10 +2,11 @@ local fromSetId = KEYS[1]
 local toSetId = KEYS[2]
 local min = ARGV[1]
 local max = ARGV[2]
-local score = ARGV[3]
 
 local data = redis.call('zrange', fromSetId, min, max, 'WITHSCORES')
 for k, v in pairs(data) do 
+    -- values and scores are returned as alternating items in data
+    -- where values are at odd indexes and scores are at even indexes
     if k % 2 == 1 then 
         local val  = v
         local score = data[k + 1]
