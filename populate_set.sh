@@ -1,16 +1,25 @@
 REDIS_CLI=redis-cli
-SET_1=set1
-SET_2=set2
+MIN=$2
+MAX=$3
 
+if [ -z "$MIN" ]
+then
+   MIN=1
+fi
+
+if [ -z "$MAX" ]
+then
+   MAX=5
+fi
+   
 # Remove any left-over data, send output to /dev/null so it doesn't clutter
 # output
-${REDIS_CLI} del ${SET_1} > /dev/null
-${REDIS_CLI} del ${SET_2} > /dev/null
+${REDIS_CLI} del $1 > /dev/null
 
-${REDIS_CLI} zadd ${SET_1} 1 "value1" > /dev/null
-${REDIS_CLI} zadd ${SET_1} 2 "value2" > /dev/null
-${REDIS_CLI} zadd ${SET_1} 3 "value3" > /dev/null
-${REDIS_CLI} zadd ${SET_1} 4 "value4" > /dev/null
+for i in $(seq $MIN $MAX)
+do
+    ${REDIS_CLI} zadd $1 $i "value${i}" > /dev/null
+done
 
-echo "Initial data in ${SET_1}"
- ${REDIS_CLI} zrange ${SET_1} 0 -1 WITHSCORES
+echo "Initial data in $1"
+${REDIS_CLI} zrange $1 0 -1 WITHSCORES
