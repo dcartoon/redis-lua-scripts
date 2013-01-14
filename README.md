@@ -15,3 +15,15 @@ zmovebyrank
 ============
 
 Move a range(by rank) of items from one sorted set to another sorted set.
+
+zmultstore
+============
+
+Multiply the item scores from one sorted set with item scores from another
+ sorted set.  Results are stored in a third set.
+
+zdivstore
+============
+
+Divide the item scores from one sorted set by item scores from another sorted
+ set.  Results are stored in a third set.
